@@ -1,0 +1,8 @@
+.filter-panel{
+    margin-bottom:25px;
+}
+
+.filter-panel select{
+    padding:12px;
+    width:250px;
+}

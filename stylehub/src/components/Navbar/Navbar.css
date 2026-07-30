@@ -1,0 +1,43 @@
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 8%;
+    background:#000;
+    color:#fff;
+}
+
+.logo a{
+    color:white;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.nav-links{
+    display:flex;
+    gap:35px;
+    list-style:none;
+}
+
+.nav-links a{
+    color:white;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:gold;
+}
+
+.icons{
+    display:flex;
+    gap:20px;
+    font-size:22px;
+}
+
+.icons a{
+    color:white;
+}
+
+.icons a:hover{
+    color:gold;
+}

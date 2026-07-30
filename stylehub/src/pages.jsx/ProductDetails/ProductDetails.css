@@ -1,0 +1,200 @@
+.details {
+  display: flex;
+  gap: 60px;
+  padding: 60px 8%;
+  flex-wrap: wrap;
+}
+
+.left {
+  flex: 1;
+}
+
+.right {
+  flex: 1;
+}
+
+.main-image {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.gallery {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.gallery img {
+  width: 90px;
+  height: 90px;
+  cursor: pointer;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+}
+
+.gallery img:hover {
+  border-color: black;
+}
+
+.right h1 {
+  margin-bottom: 15px;
+  font-size: 28px;
+}
+
+.right h2 {
+  margin: 20px 0;
+  color: red;
+  font-size: 24px;
+}
+
+.right p {
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.product-info {
+  margin: 20px 0;
+  padding: 15px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.product-info h4 {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.sizes {
+  margin: 25px 0;
+}
+
+.sizes h3 {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.sizes button {
+  margin-right: 10px;
+  margin-bottom: 8px;
+  padding: 10px 18px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.sizes button:hover {
+  border-color: black;
+  background: black;
+  color: white;
+}
+
+.qty {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.qty button {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.qty button:hover {
+  border-color: black;
+  background: black;
+  color: white;
+}
+
+.qty span {
+  font-size: 16px;
+  font-weight: 500;
+  min-width: 30px;
+  text-align: center;
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.cart-btn {
+  flex: 1;
+  padding: 15px 35px;
+  background: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.cart-btn:hover {
+  background: #333;
+}
+
+.wish-btn {
+  flex: 1;
+  padding: 15px 35px;
+  background: crimson;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.wish-btn:hover {
+  background: #c91c3c;
+}
+
+@media (max-width: 768px) {
+  .details {
+    gap: 20px;
+    padding: 40px 5%;
+    flex-direction: column;
+  }
+
+  .left,
+  .right {
+    flex: 1 1 100%;
+  }
+
+  .main-image {
+    height: 350px;
+  }
+
+  .right h1 {
+    font-size: 22px;
+  }
+
+  .right h2 {
+    font-size: 20px;
+  }
+
+  .buttons {
+    flex-direction: column;
+  }
+
+  .cart-btn,
+  .wish-btn {
+    width: 100%;
+  }
+}

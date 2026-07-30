@@ -1,0 +1,15 @@
+.featured{
+    padding:60px 8%;
+}
+
+.featured h1{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.category-grid{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+}

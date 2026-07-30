@@ -1,0 +1,99 @@
+.checkout{
+
+display:flex;
+
+gap:50px;
+
+padding:60px 8%;
+
+flex-wrap:wrap;
+
+}
+
+.left{
+
+flex:2;
+
+}
+
+.right{
+
+flex:1;
+
+border:1px solid #ddd;
+
+padding:25px;
+
+height:fit-content;
+
+}
+
+.left form{
+
+display:flex;
+
+flex-direction:column;
+
+gap:15px;
+
+}
+
+.left input,
+.left textarea,
+.left select{
+
+padding:12px;
+
+font-size:16px;
+
+}
+
+.place{
+
+background:black;
+
+color:white;
+
+padding:15px;
+
+border:none;
+
+cursor:pointer;
+
+}
+
+.summary-item{
+
+display:flex;
+
+justify-content:space-between;
+
+margin:15px 0;
+
+}
+
+.right input{
+
+width:100%;
+
+padding:10px;
+
+margin-top:20px;
+
+}
+
+.right button{
+
+width:100%;
+
+padding:12px;
+
+margin:15px 0;
+
+background:gold;
+
+border:none;
+
+cursor:pointer;
+
+}

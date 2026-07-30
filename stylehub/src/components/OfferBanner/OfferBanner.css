@@ -1,0 +1,63 @@
+    .offer{
+
+height:350px;
+
+margin:80px 8%;
+
+border-radius:20px;
+
+background:linear-gradient(to right,#000,#444);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+color:white;
+
+text-align:center;
+
+}
+
+.offer h1{
+
+font-size:50px;
+
+margin-bottom:10px;
+
+}
+
+.offer h2{
+
+font-size:45px;
+
+color:gold;
+
+margin-bottom:20px;
+
+}
+
+.offer p{
+
+font-size:22px;
+
+margin-bottom:25px;
+
+}
+
+.offer button{
+
+padding:15px 40px;
+
+background:gold;
+
+border:none;
+
+font-size:18px;
+
+cursor:pointer;
+
+border-radius:8px;
+
+}
