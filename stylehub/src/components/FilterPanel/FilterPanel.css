@@ -1,8 +1,27 @@
-.filter-panel{
-    margin-bottom:25px;
+.filter-panel {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  flex-wrap: wrap;
 }
 
-.filter-panel select{
-    padding:12px;
-    width:250px;
+.filter-panel label {
+  font-weight: 600;
+  color: #374151;
+}
+
+.filter-panel select {
+  padding: 10px 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  background: white;
+}
+
+.filter-panel select:focus {
+  outline: none;
+  border-color: #111827;
+  box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.08);
 }

@@ -1,11 +1,37 @@
-.search-bar{
-    margin:30px 0;
+.search-bar {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  margin: 20px auto;
 }
 
-.search-bar input{
-    width:100%;
-    padding:15px;
-    border-radius:8px;
-    border:1px solid #ddd;
-    font-size:16px;
+.search-bar input {
+  width: 100%;
+  padding: 12px 45px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 14px;
+  color: gray;
+}
+
+.clear-btn {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: gray;
+  font-size: 16px;
+}
+
+.clear-btn:hover {
+  color: crimson;
 }

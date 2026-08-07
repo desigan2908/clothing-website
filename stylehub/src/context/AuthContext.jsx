@@ -1,75 +1,151 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+
+import {
+  loginUser,
+  registerUser,
+  getProfile,
+  updateProfile as updateProfileApi,
+} from "../services/authApi";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("loggedUser")) || null
-  );
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const login = (email, password, remember) => {
-    const users = JSON.parse(localStorage.getItem("users")) || [];
+  /* ==========================
+     Load Logged In User
+  ========================== */
 
-    const existingUser = users.find(
-      (u) => u.email === email && u.password === password
-    );
+  useEffect(() => {
+    const loadUser = async () => {
+      const token = localStorage.getItem("token");
 
-    if (!existingUser) {
-      return false;
-    }
+      if (!token) {
+        setLoading(false);
+        return;
+      }
 
-    setUser(existingUser);
+      try {
+        const res = await getProfile();
+        setUser(res.data.user);
+      } catch (error) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    if (remember) {
+    loadUser();
+  }, []);
+
+  /* ==========================
+     Login
+  ========================== */
+
+  const login = async (email, password) => {
+    try {
+      const res = await loginUser({
+        email,
+        password,
+      });
+
+      localStorage.setItem("token", res.data.token);
       localStorage.setItem(
-        "loggedUser",
-        JSON.stringify(existingUser)
+        "user",
+        JSON.stringify(res.data.user)
       );
+
+      setUser(res.data.user);
+
+      return {
+        success: true,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message:
+          error.response?.data?.message ||
+          "Login Failed",
+      };
     }
-
-    return true;
   };
 
-  const register = (userData) => {
-    const users = JSON.parse(localStorage.getItem("users")) || [];
+  /* ==========================
+     Register
+  ========================== */
 
-    users.push(userData);
+  const register = async (userData) => {
+    try {
+      const res = await registerUser(userData);
 
-    localStorage.setItem("users", JSON.stringify(users));
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem(
+        "user",
+        JSON.stringify(res.data.user)
+      );
+
+      setUser(res.data.user);
+
+      return {
+        success: true,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message:
+          error.response?.data?.message ||
+          "Registration Failed",
+      };
+    }
   };
+
+  /* ==========================
+     Logout
+  ========================== */
 
   const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
     setUser(null);
-    localStorage.removeItem("loggedUser");
   };
 
+  /* ==========================
+     Update Profile
+  ========================== */
 
+  const updateProfile = async (data) => {
+    try {
+      const res = await updateProfileApi(data);
 
-const updateProfile = (updatedUser) => {
-  setUser(updatedUser);
-  localStorage.setItem(
-    "loggedUser",
-    JSON.stringify(updatedUser)
-  );
+      setUser(res.data.user);
 
-  const users =
-    JSON.parse(localStorage.getItem("users")) || [];
+      localStorage.setItem(
+        "user",
+        JSON.stringify(res.data.user)
+      );
 
-  const updatedUsers = users.map((u) =>
-    u.email === updatedUser.email ? updatedUser : u
-  );
-
-  localStorage.setItem(
-    "users",
-    JSON.stringify(updatedUsers)
-  );
-};
-
+      return {
+        success: true,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message:
+          error.response?.data?.message ||
+          "Profile Update Failed",
+      };
+    }
+  };
 
   return (
     <AuthContext.Provider
       value={{
         user,
+        loading,
         login,
         register,
         logout,

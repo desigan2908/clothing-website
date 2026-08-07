@@ -1,39 +1,26 @@
-import axios from "axios";
+import api from "./api";
 
-export const getProducts = async () => {
-  const categories = [
-    "mens-shirts",
-    "mens-shoes",
-    "tops",
-    "womens-dresses",
-    "womens-shoes",
-    "womens-bags",
-    "womens-jewellery",
-    "sunglasses"
-  ];
-
-  try {
-    const responses = await Promise.all(
-      categories.map((category) =>
-        axios.get(`https://dummyjson.com/products/category/${category}`)
-      )
-    );
-
-    const products = responses.flatMap((res) => res.data.products);
-
-    return products;
-  } catch (error) {
-    console.error("Error fetching products:", error);
-    return [];
-  }
+// Get All Products
+export const getProducts = () => {
+  return api.get("/products");
 };
 
-export const getProductById = async (id) => {
-  try {
-    const response = await axios.get(`https://dummyjson.com/products/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching product:", error);
-    return null;
-  }
+// Get Single Product
+export const getProduct = (id) => {
+  return api.get(`/products/${id}`);
+};
+
+// Create Product
+export const createProduct = (data) => {
+  return api.post("/products", data);
+};
+
+// Update Product
+export const updateProduct = (id, data) => {
+  return api.put(`/products/${id}`, data);
+};
+
+// Delete Product
+export const deleteProduct = (id) => {
+  return api.delete(`/products/${id}`);
 };

@@ -1,24 +1,37 @@
 import "./FilterPanel.css";
 
 export default function FilterPanel({
-  categories,
+  categories = [],
   selectedCategory,
   onCategoryChange,
 }) {
   return (
     <div className="filter-panel">
+
+      <label htmlFor="category-filter">
+        Category
+      </label>
+
       <select
+        id="category-filter"
         value={selectedCategory}
         onChange={(e) => onCategoryChange(e.target.value)}
       >
-        <option value="">All Categories</option>
+        <option value="">
+          All Categories
+        </option>
 
         {categories.map((category) => (
-          <option key={category} value={category}>
+          <option
+            key={category}
+            value={category}
+          >
             {category}
           </option>
         ))}
+
       </select>
+
     </div>
   );
 }

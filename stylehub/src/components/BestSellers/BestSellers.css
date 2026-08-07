@@ -1,27 +1,17 @@
-.best{
-
-padding:70px 8%;
-
-background:#fafafa;
-
+.best {
+  padding: 70px 8%;
+  background: #fafafa;
 }
 
-.best h2{
-
-text-align:center;
-
-font-size:36px;
-
-margin-bottom:40px;
-
+.best h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #111827;
 }
 
-.best-grid{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-
-gap:30px;
-
+.best-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
 }

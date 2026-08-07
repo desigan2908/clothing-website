@@ -1,7 +1,9 @@
 import "./Orders.css";
 import { useState } from "react";
+
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
+
 import { useOrders } from "../../context/OrderContext";
 import { useCart } from "../../context/CartContext";
 
@@ -27,7 +29,9 @@ export default function Orders() {
           className="search-order"
           placeholder="Search by Order ID"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) =>
+            setSearch(e.target.value)
+          }
         />
 
         {filteredOrders.length === 0 ? (
@@ -40,11 +44,18 @@ export default function Orders() {
             >
               <h3>Order #{order.id}</h3>
 
-              <p>Date : {order.orderDate}</p>
+              <p>
+                Date : {order.orderDate}
+              </p>
 
-              <p>Status : {order.status}</p>
+              <p>
+                Status : {order.status}
+              </p>
 
-              <p>Total : ${order.total}</p>
+              <p>
+                Total : ₹
+                {order.total.toFixed(2)}
+              </p>
 
               <h4>Items</h4>
 
@@ -54,18 +65,32 @@ export default function Orders() {
                   className="order-item"
                 >
                   <img
-                    src={item.image}
-                    alt={item.name}
+                    src={
+                      item.thumbnail ||
+                      item.images?.[0] ||
+                      item.image
+                    }
+                    alt={
+                      item.title || item.name
+                    }
+                    loading="lazy"
                   />
 
                   <div>
-                    <p>{item.name}</p>
-                    <p>Qty : {item.quantity}</p>
+                    <p>
+                      {item.title ||
+                        item.name}
+                    </p>
+
+                    <p>
+                      Qty : {item.quantity}
+                    </p>
                   </div>
                 </div>
               ))}
 
-              {order.status === "Pending" && (
+              {order.status ===
+                "Pending" && (
                 <button
                   className="cancel-btn"
                   onClick={() =>
@@ -79,11 +104,14 @@ export default function Orders() {
               <button
                 className="reorder-btn"
                 onClick={() =>
-                  order.items.forEach(addToCart)
+                  order.items.forEach(
+                    addToCart
+                  )
                 }
               >
                 Reorder
               </button>
+
             </div>
           ))
         )}

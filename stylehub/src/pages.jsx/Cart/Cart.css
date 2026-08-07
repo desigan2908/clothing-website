@@ -44,3 +44,26 @@
   border: 1px solid #ddd;
   max-width: 350px;
 }
+
+
+.empty-cart{
+    text-align:center;
+    padding:60px;
+}
+
+.continue-btn,
+.checkout-btn{
+    padding:12px 25px;
+    margin-top:20px;
+    border:none;
+    background:crimson;
+    color:white;
+    cursor:pointer;
+    border-radius:6px;
+    font-size:16px;
+}
+
+.continue-btn:hover,
+.checkout-btn:hover{
+    opacity:.9;
+}

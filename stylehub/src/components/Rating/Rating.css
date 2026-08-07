@@ -1,7 +1,13 @@
 .rating {
   display: flex;
-  gap: 5px;
-  color: #ffb400;
-  margin: 10px 0;
+  align-items: center;
+  gap: 4px;
+  color: #ffc107;
   font-size: 18px;
+}
+
+.rating-value {
+  margin-left: 6px;
+  color: #666;
+  font-size: 14px;
 }

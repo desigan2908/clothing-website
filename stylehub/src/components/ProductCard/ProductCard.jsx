@@ -1,44 +1,86 @@
+import { memo } from "react";
+import { Link } from "react-router-dom";
+import { FaHeart, FaShoppingCart } from "react-icons/fa";
+
 import "./ProductCard.css";
-import { FaHeart } from "react-icons/fa";
+
 import { useCart } from "../../context/CartContext";
 import { useWishlist } from "../../context/WishlistContext";
-import { Link } from "react-router-dom";
 
-export default function ProductCard({ product }) {
+function ProductCard({ product }) {
   const { addToCart } = useCart();
   const { addToWishlist } = useWishlist();
 
   return (
     <div className="product-card">
+
+      {/* Wishlist Button */}
       <button
-        className="wishlist-icon"
+        className="wishlist-btn"
         onClick={() => addToWishlist(product)}
       >
         <FaHeart />
       </button>
 
-      <Link to={`/products/${product.id}`} className="product-link">
+      {/* Product Image */}
+      <Link to={`/product/${product._id}`}>
         <img
           src={
             product.thumbnail ||
             product.images?.[0] ||
-            product.image
+            "/images/no-image.png"
           }
-          alt={product.title || product.name}
+          alt={product.title}
+          loading="lazy"
         />
-        <h3>{product.title || product.name}</h3>
       </Link>
 
-      <p className="brand">{product.brand}</p>
+      {/* Product Information */}
+      <div className="product-info">
 
-      <p className="price">₹{product.discountPrice ?? product.price}</p>
+        <h3>{product.title}</h3>
 
-      <button
-        className="cart-btn"
-        onClick={() => addToCart(product)}
-      >
-        Add To Cart
-      </button>
+        <p className="brand">
+          {product.brand}
+        </p>
+
+        <div className="price-section">
+
+          <span className="price">
+            ₹{product.price}
+          </span>
+
+          {product.discountPercentage > 0 && (
+            <span className="discount">
+              {product.discountPercentage}% OFF
+            </span>
+          )}
+
+        </div>
+
+        {product.rating && (
+          <p className="rating">
+            ⭐ {product.rating}
+          </p>
+        )}
+
+        <button
+          className="cart-btn"
+          onClick={() =>
+            addToCart({
+              ...product,
+              quantity: 1,
+            })
+          }
+        >
+          <FaShoppingCart />
+          Add To Cart
+        </button>
+
+      </div>
+
     </div>
   );
 }
+
+export default memo(ProductCard);

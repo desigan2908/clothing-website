@@ -1,38 +1,33 @@
 import "./OfferBanner.css";
 import { Link } from "react-router-dom";
 
-export default function OfferBanner(){
+export default function OfferBanner() {
+  return (
+    <section className="offer">
 
-return(
+      <div className="offer-content">
 
-<section className="offer">
+        <span className="offer-badge">
+          🔥 Limited Time Offer
+        </span>
 
-<div className="offer-content">
+        <h1>Summer Sale</h1>
 
-<h1>Summer Sale</h1>
+        <h2>Up To 50% OFF</h2>
 
-<h2>UP TO 50% OFF</h2>
+        <p>
+          Discover premium fashion for Men, Women and Kids.
+          Enjoy exclusive discounts on the latest collections.
+        </p>
 
-<p>
+        <Link to="/products">
+          <button>
+            Shop Now
+          </button>
+        </Link>
 
-Premium Fashion Collection
+      </div>
 
-</p>
-
-<Link to="/products">
-
-<button>
-
-Shop Collection
-
-</button>
-
-</Link>
-
-</div>
-
-</section>
-
-);
-
+    </section>
+  );
 }

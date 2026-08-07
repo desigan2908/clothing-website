@@ -5,8 +5,14 @@ export default function Pagination({
   totalPages,
   onPageChange,
 }) {
+  if (totalPages <= 1) return null;
+
   return (
-    <div className="pagination">
+    <div
+      className="pagination"
+      role="navigation"
+      aria-label="Pagination"
+    >
       <button
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
@@ -14,9 +20,19 @@ export default function Pagination({
         Previous
       </button>
 
-      <span>
-        {currentPage} / {totalPages}
-      </span>
+      {Array.from({ length: totalPages }, (_, index) => (
+        <button
+          key={index + 1}
+          className={
+            currentPage === index + 1
+              ? "active-page"
+              : ""
+          }
+          onClick={() => onPageChange(index + 1)}
+        >
+          {index + 1}
+        </button>
+      ))}
 
       <button
         disabled={currentPage === totalPages}

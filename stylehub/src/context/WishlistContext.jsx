@@ -1,34 +1,91 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
+import {
+  getWishlist,
+  addWishlist,
+  removeWishlist,
+} from "../services/wishlistApi";
+
 const WishlistContext = createContext();
 
 export function WishlistProvider({ children }) {
-  const [wishlist, setWishlist] = useState(() => {
-    return JSON.parse(localStorage.getItem("wishlist")) || [];
-  });
+  const [wishlist, setWishlist] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  /* ==========================
+     Load Wishlist
+  ========================== */
 
   useEffect(() => {
-    localStorage.setItem("wishlist", JSON.stringify(wishlist));
-  }, [wishlist]);
+    fetchWishlist();
+  }, []);
 
-  const addToWishlist = (product) => {
-    const exists = wishlist.find((item) => item.id === product.id);
+  const fetchWishlist = async () => {
+    try {
+      const token = localStorage.getItem("token");
 
-    if (!exists) {
-      setWishlist([...wishlist, product]);
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+
+      const res = await getWishlist();
+
+      setWishlist(res.data.wishlist);
+    } catch (error) {
+      console.error("Failed to fetch wishlist", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const removeFromWishlist = (id) => {
-    setWishlist(wishlist.filter((item) => item.id !== id));
+  /* ==========================
+     Add To Wishlist
+  ========================== */
+
+  const addToWishlist = async (product) => {
+    try {
+      await addWishlist({
+        product: product._id,
+      });
+
+      await fetchWishlist();
+    } catch (error) {
+      console.error("Add Wishlist Error", error);
+    }
+  };
+
+  /* ==========================
+     Remove From Wishlist
+  ========================== */
+
+  const removeFromWishlist = async (wishlistId) => {
+    try {
+      await removeWishlist(wishlistId);
+
+      await fetchWishlist();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  /* ==========================
+     Clear Wishlist
+  ========================== */
+
+  const clearWishlist = () => {
+    setWishlist([]);
   };
 
   return (
     <WishlistContext.Provider
       value={{
         wishlist,
+        loading,
         addToWishlist,
         removeFromWishlist,
+        clearWishlist,
+        refreshWishlist: fetchWishlist,
       }}
     >
       {children}

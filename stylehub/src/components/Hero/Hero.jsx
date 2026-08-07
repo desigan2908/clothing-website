@@ -2,35 +2,46 @@ import "./Hero.css";
 import { Link } from "react-router-dom";
 
 export default function Hero() {
+  return (
+    <section className="hero">
 
-    return (
+      <div className="hero-overlay">
 
-<section className="hero">
+        <div className="hero-content">
 
-<div className="hero-content">
+          <span className="offer">
+            🔥 New Collection 2026
+          </span>
 
-<h1>New Fashion Collection 2026</h1>
+          <h1>
+            Discover Your Perfect Style
+          </h1>
 
-<p>
+          <p>
+            Shop premium fashion for Men, Women and Kids.
+            Explore the latest trends with exclusive discounts.
+          </p>
 
-Discover premium clothing for Men, Women and Kids.
+          <div className="hero-buttons">
 
-</p>
+            <Link to="/products">
+              <button className="shop-btn">
+                Shop Now
+              </button>
+            </Link>
 
-<Link to="/products">
+            <Link to="/products">
+              <button className="explore-btn">
+                Explore Collection
+              </button>
+            </Link>
 
-<button>
+          </div>
 
-Shop Now
+        </div>
 
-</button>
+      </div>
 
-</Link>
-
-</div>
-
-</section>
-
-    );
-
+    </section>
+  );
 }

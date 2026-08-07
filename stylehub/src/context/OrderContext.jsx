@@ -16,20 +16,28 @@ export function OrderProvider({ children }) {
       id: Date.now(),
       ...order,
       status: "Pending",
-      orderDate: new Date().toLocaleDateString(),
+      orderDate: new Date().toLocaleString(),
     };
 
-    setOrders((prev) => [...prev, newOrder]);
+    setOrders((prevOrders) => [...prevOrders, newOrder]);
   };
 
   const cancelOrder = (id) => {
-    setOrders((prev) =>
-      prev.map((order) =>
+    setOrders((prevOrders) =>
+      prevOrders.map((order) =>
         order.id === id
           ? { ...order, status: "Cancelled" }
           : order
       )
     );
+  };
+
+  const getOrderById = (id) => {
+    return orders.find((order) => order.id === id);
+  };
+
+  const clearOrders = () => {
+    setOrders([]);
   };
 
   return (
@@ -38,6 +46,8 @@ export function OrderProvider({ children }) {
         orders,
         placeOrder,
         cancelOrder,
+        getOrderById,
+        clearOrders,
       }}
     >
       {children}

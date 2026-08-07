@@ -1,7 +1,11 @@
 import "./Rating.css";
-import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
+import {
+  FaStar,
+  FaStarHalfAlt,
+  FaRegStar,
+} from "react-icons/fa";
 
-export default function Rating({ rating }) {
+export default function Rating({ rating = 0 }) {
   const stars = [];
 
   for (let i = 1; i <= 5; i++) {
@@ -14,5 +18,16 @@ export default function Rating({ rating }) {
     }
   }
 
-  return <div className="rating">{stars}</div>;
+  return (
+    <div
+      className="rating"
+      aria-label={`Rating: ${rating} out of 5`}
+    >
+      {stars}
+
+      <span className="rating-value">
+        ({rating.toFixed(1)})
+      </span>
+    </div>
+  );
 }

@@ -1,15 +1,18 @@
-.featured{
-    padding:60px 8%;
+.featured {
+  padding: 70px 8%;
+  background: #fff;
 }
 
-.featured h1{
-    text-align:center;
-    margin-bottom:40px;
+.featured h1 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2rem;
+  color: #111827;
 }
 
-.category-grid{
-    display:flex;
-    justify-content:center;
-    gap:30px;
-    flex-wrap:wrap;
+.category-grid {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
 }

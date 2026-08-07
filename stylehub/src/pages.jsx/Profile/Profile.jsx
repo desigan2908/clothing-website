@@ -1,148 +1,174 @@
 import "./Profile.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
+
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
+
 import { useAuth } from "../../context/AuthContext";
 
 export default function Profile() {
+  const navigate = useNavigate();
 
-const navigate=useNavigate();
+  const {
+    user,
+    logout,
+    updateProfile,
+    loading,
+  } = useAuth();
 
-const {
-user,
-logout,
-updateProfile
-}=useAuth();
+  const [editing, setEditing] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
 
-const [editing,setEditing]=useState(false);
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <div className="profile">
+          <h2>Loading...</h2>
+        </div>
+        <Footer />
+      </>
+    );
+  }
 
-const [form,setForm]=useState({
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
 
-name:user?.name||"",
-email:user?.email||"",
-phone:user?.phone||"",
-address:user?.address||""
+  const [form, setForm] = useState({
+    name: user.name || "",
+    email: user.email || "",
+    phone: user.phone || "",
+    address: user.address || "",
+  });
 
-});
+  const handleChange = (e) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
-const handleChange=(e)=>{
+  const saveProfile = async () => {
+    try {
+      setSaving(true);
+      setError("");
 
-setForm({
+      const result = await updateProfile({
+        name: form.name,
+        phone: form.phone,
+        address: form.address,
+      });
 
-...form,
-[e.target.name]:e.target.value
+      if (!result.success) {
+        setError(result.message);
+        return;
+      }
 
-});
+      alert("Profile Updated Successfully");
 
-};
+      setEditing(false);
+    } catch (err) {
+      setError("Failed to update profile.");
+    } finally {
+      setSaving(false);
+    }
+  };
 
-const saveProfile=()=>{
+  return (
+    <>
+      <Navbar />
 
-updateProfile(form);
+      <div className="profile">
 
-setEditing(false);
+        <div className="profile-card">
 
-alert("Profile Updated");
+          <h1>My Profile</h1>
 
-};
+          {error && (
+            <p className="error-message">
+              {error}
+            </p>
+          )}
 
-return(
+          <label>Name</label>
 
-<>
+          <input
+            type="text"
+            name="name"
+            value={form.name}
+            disabled={!editing}
+            onChange={handleChange}
+          />
 
-<Navbar/>
+          <label>Email</label>
 
-<div className="profile">
+          <input
+            type="email"
+            name="email"
+            value={form.email}
+            disabled
+          />
 
-<div className="profile-card">
+          <label>Phone</label>
 
-<h1>My Profile</h1>
+          <input
+            type="tel"
+            name="phone"
+            value={form.phone}
+            disabled={!editing}
+            onChange={handleChange}
+          />
 
-<label>Name</label>
+          <label>Address</label>
 
-<input
-name="name"
-value={form.name}
-disabled={!editing}
-onChange={handleChange}
-/>
+          <textarea
+            name="address"
+            value={form.address}
+            disabled={!editing}
+            onChange={handleChange}
+          />
 
-<label>Email</label>
+          <div className="buttons">
 
-<input
-name="email"
-value={form.email}
-disabled
-/>
+            {editing ? (
+              <button
+                onClick={saveProfile}
+                disabled={saving}
+              >
+                {saving
+                  ? "Saving..."
+                  : "Save Changes"}
+              </button>
+            ) : (
+              <button
+                onClick={() =>
+                  setEditing(true)
+                }
+              >
+                Edit Profile
+              </button>
+            )}
 
-<label>Phone</label>
+            <button
+              className="logout"
+              onClick={() => {
+                logout();
+                navigate("/login");
+              }}
+            >
+              Logout
+            </button>
 
-<input
-name="phone"
-value={form.phone}
-disabled={!editing}
-onChange={handleChange}
-/>
+          </div>
 
-<label>Address</label>
+        </div>
 
-<textarea
-name="address"
-value={form.address}
-disabled={!editing}
-onChange={handleChange}
-/>
+      </div>
 
-<div className="buttons">
-
-{editing ? (
-
-<button
-onClick={saveProfile}
->
-
-Save
-
-</button>
-
-):(
-
-<button
-onClick={()=>setEditing(true)}
->
-
-Edit Profile
-
-</button>
-
-)}
-
-<button
-className="logout"
-onClick={()=>{
-
-logout();
-
-navigate("/login");
-
-}}
->
-
-Logout
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-<Footer/>
-
-</>
-
-);
-
+      <Footer />
+    </>
+  );
 }
