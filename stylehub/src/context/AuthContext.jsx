@@ -21,17 +21,33 @@ export function AuthProvider({ children }) {
     const loadUser = async () => {
       const token = localStorage.getItem("token");
 
+      // No token means user is logged out
       if (!token) {
+        setUser(null);
         setLoading(false);
         return;
       }
 
       try {
         const res = await getProfile();
-        setUser(res.data.user);
+
+        if (res.data?.success && res.data?.user) {
+          setUser(res.data.user);
+
+          // Keep localStorage user updated
+          localStorage.setItem(
+            "user",
+            JSON.stringify(res.data.user)
+          );
+        } else {
+          throw new Error("User profile not found");
+        }
       } catch (error) {
+        console.error("Failed to load user:", error);
+
         localStorage.removeItem("token");
         localStorage.removeItem("user");
+
         setUser(null);
       } finally {
         setLoading(false);
@@ -48,11 +64,19 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     try {
       const res = await loginUser({
-        email,
+        email: email.trim().toLowerCase(),
         password,
       });
 
+      if (!res.data?.success) {
+        return {
+          success: false,
+          message: res.data?.message || "Login Failed",
+        };
+      }
+
       localStorage.setItem("token", res.data.token);
+
       localStorage.setItem(
         "user",
         JSON.stringify(res.data.user)
@@ -62,8 +86,11 @@ export function AuthProvider({ children }) {
 
       return {
         success: true,
+        user: res.data.user,
       };
     } catch (error) {
+      console.error("Login error:", error);
+
       return {
         success: false,
         message:
@@ -79,9 +106,22 @@ export function AuthProvider({ children }) {
 
   const register = async (userData) => {
     try {
-      const res = await registerUser(userData);
+      const res = await registerUser({
+        ...userData,
+        email: userData.email.trim().toLowerCase(),
+      });
+
+      if (!res.data?.success) {
+        return {
+          success: false,
+          message:
+            res.data?.message ||
+            "Registration Failed",
+        };
+      }
 
       localStorage.setItem("token", res.data.token);
+
       localStorage.setItem(
         "user",
         JSON.stringify(res.data.user)
@@ -91,8 +131,11 @@ export function AuthProvider({ children }) {
 
       return {
         success: true,
+        user: res.data.user,
       };
     } catch (error) {
+      console.error("Registration error:", error);
+
       return {
         success: false,
         message:
@@ -107,9 +150,11 @@ export function AuthProvider({ children }) {
   ========================== */
 
   const logout = () => {
+    // Remove authentication data
     localStorage.removeItem("token");
     localStorage.removeItem("user");
 
+    // Clear React authentication state
     setUser(null);
   };
 
@@ -121,6 +166,15 @@ export function AuthProvider({ children }) {
     try {
       const res = await updateProfileApi(data);
 
+      if (!res.data?.success) {
+        return {
+          success: false,
+          message:
+            res.data?.message ||
+            "Profile Update Failed",
+        };
+      }
+
       setUser(res.data.user);
 
       localStorage.setItem(
@@ -130,8 +184,11 @@ export function AuthProvider({ children }) {
 
       return {
         success: true,
+        user: res.data.user,
       };
     } catch (error) {
+      console.error("Profile update error:", error);
+
       return {
         success: false,
         message:

@@ -4,16 +4,20 @@ import { useNavigate, Link } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 
-import { loginUser } from "../../services/authApi";
+import { useAuth } from "../../context/AuthContext";
 
 import "./Login.css";
 
 export default function Login() {
   const navigate = useNavigate();
 
+  // Use AuthContext login instead of calling loginUser directly
+  const { login } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -30,29 +34,33 @@ export default function Login() {
     try {
       setLoading(true);
 
-      const res = await loginUser({
-        email: email.trim(),
-        password,
-      });
-
-      // Save JWT Token
-      localStorage.setItem("token", res.data.token);
-
-      // Save User
-      localStorage.setItem(
-        "user",
-        JSON.stringify(res.data.user)
+      // Login through AuthContext
+      // This updates BOTH localStorage and the React user state
+      const result = await login(
+        email.trim(),
+        password
       );
+
+      if (!result.success) {
+        setError(result.message || "Login Failed");
+        return;
+      }
 
       // Remember Me
       if (remember) {
-        localStorage.setItem("rememberEmail", email);
+        localStorage.setItem(
+          "rememberEmail",
+          email.trim()
+        );
       } else {
         localStorage.removeItem("rememberEmail");
       }
 
+      // User is now available in AuthContext
       navigate("/profile");
     } catch (err) {
+      console.error("Login error:", err);
+
       setError(
         err.response?.data?.message ||
           "Login Failed"
@@ -84,6 +92,7 @@ export default function Login() {
 
             <form onSubmit={handleSubmit}>
 
+              {/* Email */}
               <div className="form-group">
                 <label htmlFor="email">
                   Email Address
@@ -97,9 +106,11 @@ export default function Login() {
                   onChange={(e) =>
                     setEmail(e.target.value)
                   }
+                  autoComplete="email"
                 />
               </div>
 
+              {/* Password */}
               <div className="form-group">
                 <label htmlFor="password">
                   Password
@@ -113,9 +124,11 @@ export default function Login() {
                   onChange={(e) =>
                     setPassword(e.target.value)
                   }
+                  autoComplete="current-password"
                 />
               </div>
 
+              {/* Remember Me */}
               <div className="form-group checkbox">
 
                 <label>
@@ -144,6 +157,7 @@ export default function Login() {
 
               </div>
 
+              {/* Login Button */}
               <button
                 type="submit"
                 className="login-btn"
@@ -162,6 +176,7 @@ export default function Login() {
 
             <div className="signup-link">
               Don't have an account?{" "}
+
               <Link to="/register">
                 Create one now
               </Link>

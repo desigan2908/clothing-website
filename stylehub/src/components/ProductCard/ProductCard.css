@@ -1,89 +1,170 @@
-.product-card{
-    position: relative;
-    background:#fff;
-    border-radius:12px;
-    overflow:hidden;
-    padding:15px;
+.product-card {
+  position: relative;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.wishlist-icon{
-    position:absolute;
-    top:12px;
-    right:12px;
-    width:40px;
-    height:40px;
-    border:none;
-    border-radius:50%;
-    background:white;
-    color:#999;
-    cursor:pointer;
-    font-size:18px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:0 2px 8px rgba(0,0,0,.15);
-    transition:.3s;
-    z-index: 10;
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
-.wishlist-icon:hover{
-    color:#e91e63;
-    transform:scale(1.1);
+/* ==========================
+   Wishlist Button
+========================== */
+
+.wishlist-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.95);
+  color: #555;
+
+  cursor: pointer;
+
+  font-size: 19px;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+
+  z-index: 10;
+
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-.product-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    cursor: pointer;
-    transition: transform 0.3s ease;
+.wishlist-btn:hover {
+  color: #e63946;
+  background: #fff;
+  transform: scale(1.12);
+  box-shadow: 0 5px 15px rgba(230, 57, 70, 0.25);
 }
 
-.product-link:hover {
-    transform: translateY(-5px);
+.wishlist-btn:active {
+  transform: scale(0.95);
 }
 
-.product-card img{
-    width:100%;
-    height:280px;
-    object-fit:cover;
-    border-radius: 8px;
-    margin-bottom: 10px;
+.wishlist-btn svg {
+  transition: transform 0.25s ease;
 }
+
+.wishlist-btn:hover svg {
+  transform: scale(1.1);
+}
+
+/* ==========================
+   Product Image
+========================== */
+
+.product-card img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* ==========================
+   Product Information
+========================== */
 
 .product-card h3 {
-    font-size: 16px;
-    margin: 10px 0;
-    color: #333;
-    font-weight: 600;
+  font-size: 16px;
+  margin: 10px 0;
+  color: #333;
+  font-weight: 600;
 }
 
 .brand {
-    font-size: 14px;
-    color: #666;
-    margin: 5px 0;
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0;
+}
+
+.price-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
 }
 
 .price {
-    font-size: 18px;
-    font-weight: 700;
-    color: #000;
-    margin: 10px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
 }
 
-.cart-btn{
-    width:100%;
-    margin-top:15px;
-    padding:12px;
-    background: black;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background 0.3s ease;
+.discount {
+  font-size: 14px;
+  color: #e63946;
+  font-weight: 600;
+}
+
+.rating {
+  font-size: 14px;
+  color: #555;
+  margin: 8px 0;
+}
+
+/* ==========================
+   Add To Cart
+========================== */
+
+.cart-btn {
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px;
+
+  background: #000;
+  color: #fff;
+
+  border: none;
+  border-radius: 5px;
+
+  cursor: pointer;
+
+  font-weight: 500;
+
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .cart-btn:hover {
-    background: #333;
+  background: #333;
+}
+
+.cart-btn:active {
+  transform: scale(0.98);
+}
+
+/* ==========================
+   Responsive
+========================== */
+
+@media (max-width: 768px) {
+  .product-card img {
+    height: 240px;
+  }
+
+  .wishlist-btn {
+    top: 18px;
+    right: 18px;
+    width: 40px;
+    height: 40px;
+  }
 }

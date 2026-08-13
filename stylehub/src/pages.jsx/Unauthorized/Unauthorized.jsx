@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { FaHeart, FaShoppingBag } from "react-icons/fa";
+
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import "./Unauthorized.css";
@@ -8,37 +10,42 @@ export default function Unauthorized() {
     <>
       <Navbar />
 
-      <div className="unauthorized">
-
+      <main className="unauthorized">
         <div className="unauthorized-card">
 
-          <h1>401</h1>
+          <div className="unauthorized-icon">
+            <FaShoppingBag />
+          </div>
 
-          <h2>Unauthorized Access</h2>
+          <div className="heart-decoration">
+            <FaHeart />
+          </div>
+
+          <h1>Your Style Awaits</h1>
+
+          <h2>Log in to continue shopping</h2>
 
           <p>
-            You must log in before accessing this page.
+            Sign in to your StyleHub account to view your orders,
+            track your purchases, and keep your fashion journey going.
           </p>
 
           <div className="unauthorized-buttons">
-
-            <Link to="/login">
-              <button className="login-btn">
-                Login
-              </button>
+            <Link to="/login" className="login-btn">
+              Login to StyleHub
             </Link>
 
-            <Link to="/">
-              <button className="home-btn">
-                Go Home
-              </button>
+            <Link to="/" className="home-btn">
+              Continue Shopping
             </Link>
-
           </div>
 
-        </div>
+          <p className="unauthorized-note">
+            New to StyleHub? Create an account and discover your style.
+          </p>
 
-      </div>
+        </div>
+      </main>
 
       <Footer />
     </>

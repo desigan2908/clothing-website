@@ -17,7 +17,7 @@ function ProductCard({ product }) {
       {/* Wishlist Button */}
       <button
         className="wishlist-btn"
-        onClick={() => addToWishlist(product)}
+        onClick={() => addToWishlist(product)}    
       >
         <FaHeart />
       </button>

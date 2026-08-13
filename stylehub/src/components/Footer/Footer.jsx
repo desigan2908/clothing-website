@@ -51,15 +51,15 @@ export default function Footer() {
           <h3>Contact</h3>
 
           <p>
-            <FaMapMarkerAlt /> Colombo, Sri Lanka
+            <FaMapMarkerAlt /> KARAIKUDI, TAMILNADU, INDIA
           </p>
 
           <p>
-            <FaPhone /> +94 77 123 4567
+            <FaPhone /> +91 98765 43210
           </p>
 
           <p>
-            <FaEnvelope /> support@stylehub.com
+            <FaEnvelope /> vinothkumar@stylehub.com
           </p>
 
           <div className="social-icons">

@@ -2,11 +2,12 @@
   position: relative;
   width: 100%;
   max-width: 450px;
-  margin: 20px auto;
+  margin: 0;
 }
 
 .search-bar input {
   width: 100%;
+  box-sizing: border-box;
   padding: 12px 45px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -14,24 +15,39 @@
   outline: none;
 }
 
+.search-bar input:focus {
+  border-color: #111827;
+  box-shadow: 0 0 0 2px rgba(17, 24, 39, 0.08);
+}
+
 .search-icon {
   position: absolute;
   left: 15px;
-  top: 14px;
+  top: 50%;
+  transform: translateY(-50%);
   color: gray;
+  pointer-events: none;
 }
 
 .clear-btn {
   position: absolute;
   right: 15px;
-  top: 10px;
+  top: 50%;
+  transform: translateY(-50%);
   border: none;
   background: transparent;
   cursor: pointer;
   color: gray;
   font-size: 16px;
+  padding: 0;
 }
 
 .clear-btn:hover {
   color: crimson;
+}
+
+@media (max-width: 768px) {
+  .search-bar {
+    max-width: 100%;
+  }
 }

@@ -81,127 +81,229 @@ export default function Register() {
     <>
       <Navbar />
 
-      <div className="register-container">
-        <div className="register-wrapper">
-          <div className="register-box">
+      <main className="register-page">
+        <div className="register-card">
 
-            <h1>Create Account</h1>
+          {/* Left Branding Section */}
+          <div className="register-showcase">
 
-            <p className="subtitle">
-              Join us and start shopping
-            </p>
+            <div className="showcase-content">
+              <div className="brand-mark">S</div>
+
+              <h1>
+                Welcome to
+                <span> StyleHub</span>
+              </h1>
+
+              <p>
+                Discover your style, explore new trends,
+                and shop everything you love in one place.
+              </p>
+
+              <div className="showcase-features">
+
+                <div className="feature">
+                  <span className="feature-icon">✓</span>
+                  <div>
+                    <strong>Fresh Styles</strong>
+                    <small>Discover the latest fashion</small>
+                  </div>
+                </div>
+
+                <div className="feature">
+                  <span className="feature-icon">✓</span>
+                  <div>
+                    <strong>Easy Shopping</strong>
+                    <small>A simple shopping experience</small>
+                  </div>
+                </div>
+
+                <div className="feature">
+                  <span className="feature-icon">✓</span>
+                  <div>
+                    <strong>Secure Account</strong>
+                    <small>Your account stays protected</small>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div className="showcase-decoration decoration-one"></div>
+            <div className="showcase-decoration decoration-two"></div>
+
+          </div>
+
+          {/* Registration Section */}
+          <div className="register-form-section">
+
+            <div className="register-header">
+
+              <span className="welcome-text">
+                GET STARTED
+              </span>
+
+              <h2>Create your account</h2>
+
+              <p>
+                Join StyleHub and start shopping today.
+              </p>
+
+            </div>
 
             {error && (
               <div className="error-message">
+                <span>!</span>
                 {error}
               </div>
             )}
 
-            <form onSubmit={handleSubmit}>
+            <form
+              className="register-form"
+              onSubmit={handleSubmit}
+            >
 
+              {/* Full Name */}
               <div className="form-group">
                 <label htmlFor="name">
                   Full Name
                 </label>
 
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  placeholder="Enter your full name"
-                  value={form.name}
-                  onChange={handleChange}
-                />
+                <div className="input-wrapper">
+                  <span className="input-icon">👤</span>
+
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="Enter your full name"
+                    value={form.name}
+                    onChange={handleChange}
+                    autoComplete="name"
+                  />
+                </div>
               </div>
 
+              {/* Email */}
               <div className="form-group">
                 <label htmlFor="email">
                   Email Address
                 </label>
 
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  value={form.email}
-                  onChange={handleChange}
-                />
+                <div className="input-wrapper">
+                  <span className="input-icon">✉</span>
+
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={form.email}
+                    onChange={handleChange}
+                    autoComplete="email"
+                  />
+                </div>
               </div>
 
+              {/* Password */}
               <div className="form-group">
                 <label htmlFor="password">
                   Password
                 </label>
 
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="Create a password"
-                  value={form.password}
-                  onChange={handleChange}
-                />
+                <div className="input-wrapper">
+                  <span className="input-icon">🔒</span>
+
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    placeholder="Create a password"
+                    value={form.password}
+                    onChange={handleChange}
+                    autoComplete="new-password"
+                  />
+                </div>
 
                 <p className="hint">
-                  Minimum 6 characters
+                  Use at least 6 characters
                 </p>
               </div>
 
+              {/* Confirm Password */}
               <div className="form-group">
                 <label htmlFor="confirmPassword">
                   Confirm Password
                 </label>
 
-                <input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  placeholder="Confirm your password"
-                  value={form.confirmPassword}
-                  onChange={handleChange}
-                />
+                <div className="input-wrapper">
+                  <span className="input-icon">   🔐</span>
+
+                  <input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type="password"
+                    placeholder="Confirm your password"
+                    value={form.confirmPassword}
+                    onChange={handleChange}
+                    autoComplete="new-password"
+                  />
+                </div>
               </div>
 
+              {/* Terms */}
               <div className="terms">
-                <label>
+                <label className="terms-label">
+
                   <input
                     type="checkbox"
                     required
                   />
 
-                  <span>
-                    I agree to the Terms and Conditions
+                  <span className="custom-check"></span>
+
+                  <span className="terms-text">
+                    I agree to the{" "}
+                    <span>Terms and Conditions</span>
                   </span>
+
                 </label>
               </div>
 
+              {/* Submit */}
               <button
                 type="submit"
                 className="register-btn"
                 disabled={loading}
               >
-                {loading
-                  ? "Creating Account..."
-                  : "Create Account"}
+                {loading ? (
+                  <>
+                    <span className="spinner"></span>
+                    Creating Account...
+                  </>
+                ) : (
+                  <>
+                    Create Account
+                    <span className="arrow">→</span>
+                  </>
+                )}
               </button>
 
             </form>
 
-            <div className="divider">
-              or
-            </div>
-
+            {/* Login */}
             <div className="login-link">
-              Already have an account?{" "}
+              <span>Already have an account?</span>
+
               <Link to="/login">
-                Sign in here
+                Sign in
               </Link>
             </div>
 
           </div>
+
         </div>
-      </div>
+      </main>
 
       <Footer />
     </>

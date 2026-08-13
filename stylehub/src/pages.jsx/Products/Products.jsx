@@ -34,7 +34,6 @@ export default function Products() {
         const res = await getProducts();
 
         setProducts(res.data.products);
-
       } catch (err) {
         console.error(err);
 
@@ -122,16 +121,25 @@ export default function Products() {
           Women and Accessories.
         </p>
 
-        <SearchBar
-          value={search}
-          onChange={setSearch}
-        />
+        {/* Search + Category */}
+        <div className="products-controls">
 
-        <FilterPanel
-          categories={categories}
-          selectedCategory={category}
-          onCategoryChange={setCategory}
-        />
+          <div className="category-control">
+            <FilterPanel
+              categories={categories}
+              selectedCategory={category}
+              onCategoryChange={setCategory}
+            />
+          </div>
+
+          <div className="search-control">
+            <SearchBar
+              value={search}
+              onChange={setSearch}
+            />
+          </div>
+
+        </div>
 
         {loading && <Loader />}
 
@@ -154,6 +162,7 @@ export default function Products() {
           filteredProducts.length > 0 && (
             <>
               <div className="product-grid">
+
                 {displayedProducts.map(
                   (product) => (
                     <ProductCard
@@ -162,6 +171,7 @@ export default function Products() {
                     />
                   )
                 )}
+
               </div>
 
               <Pagination

@@ -3,58 +3,164 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 20px;
+  padding: 70px 20px;
+  background: #f8f9fb;
 }
 
 .unauthorized-card {
-  max-width: 500px;
+  position: relative;
+  max-width: 650px;
   width: 100%;
   text-align: center;
-  background: white;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  background: #ffffff;
+  padding: 55px 50px;
+  border-radius: 24px;
+  box-shadow: 0 15px 45px rgba(17, 24, 39, 0.1);
+  overflow: hidden;
 }
 
+/* Decorative top line */
+.unauthorized-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: #e11d48;
+}
+
+/* Shopping bag icon */
+.unauthorized-icon {
+  width: 75px;
+  height: 75px;
+  margin: 0 auto 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #fdf2f4;
+  color: #e11d48;
+  font-size: 30px;
+}
+
+/* Small heart decoration */
+.heart-decoration {
+  position: absolute;
+  top: 35px;
+  right: 45px;
+  color: #f9a8b8;
+  font-size: 22px;
+  transform: rotate(15deg);
+}
+
+/* Main heading */
 .unauthorized-card h1 {
-  font-size: 90px;
-  color: crimson;
-  margin-bottom: 10px;
+  margin: 0 0 12px;
+  color: #111827;
+  font-size: 38px;
+  font-weight: 800;
 }
 
+/* Sub heading */
 .unauthorized-card h2 {
-  margin-bottom: 15px;
+  margin: 0 0 18px;
+  color: #374151;
+  font-size: 21px;
+  font-weight: 600;
 }
 
+/* Description */
 .unauthorized-card p {
-  color: #666;
-  margin-bottom: 30px;
+  max-width: 500px;
+  margin: 0 auto 30px;
+  color: #6b7280;
+  font-size: 16px;
+  line-height: 1.7;
 }
 
+/* Buttons */
 .unauthorized-buttons {
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 14px;
   flex-wrap: wrap;
 }
 
-.unauthorized-buttons button {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  color: white;
+/* Both links behave like buttons */
+.unauthorized-buttons a {
+  min-width: 180px;
+  padding: 13px 24px;
+  border-radius: 10px;
   font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
 }
 
+/* Login */
 .login-btn {
-  background: #0d6efd;
+  background: #111827;
+  color: #ffffff;
 }
 
+.login-btn:hover {
+  background: #e11d48;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(225, 29, 72, 0.2);
+}
+
+/* Continue shopping */
 .home-btn {
-  background: crimson;
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid #d1d5db;
 }
 
-.unauthorized-buttons button:hover {
-  opacity: 0.9;
+.home-btn:hover {
+  background: #f3f4f6;
+  transform: translateY(-2px);
+}
+
+/* Bottom message */
+.unauthorized-card .unauthorized-note {
+  margin-top: 28px;
+  margin-bottom: 0;
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .unauthorized {
+    min-height: 65vh;
+    padding: 50px 18px;
+  }
+
+  .unauthorized-card {
+    padding: 45px 25px;
+    border-radius: 18px;
+  }
+
+  .unauthorized-card h1 {
+    font-size: 30px;
+  }
+
+  .unauthorized-card h2 {
+    font-size: 18px;
+  }
+
+  .heart-decoration {
+    top: 25px;
+    right: 25px;
+  }
+
+  .unauthorized-buttons {
+    flex-direction: column;
+  }
+
+  .unauthorized-buttons a {
+    width: 100%;
+  }
 }

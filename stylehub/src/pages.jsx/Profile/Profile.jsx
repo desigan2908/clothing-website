@@ -1,6 +1,5 @@
 import "./Profile.css";
-import { useState } from "react";
-import { useNavigate, Navigate } from "react-router-dom";
+import { FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
 
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
@@ -8,165 +7,154 @@ import Footer from "../../components/Footer/Footer";
 import { useAuth } from "../../context/AuthContext";
 
 export default function Profile() {
-  const navigate = useNavigate();
-
-  const {
-    user,
-    logout,
-    updateProfile,
-    loading,
-  } = useAuth();
-
-  const [editing, setEditing] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
-
-  if (loading) {
-    return (
-      <>
-        <Navbar />
-        <div className="profile">
-          <h2>Loading...</h2>
-        </div>
-        <Footer />
-      </>
-    );
-  }
-
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
-  const [form, setForm] = useState({
-    name: user.name || "",
-    email: user.email || "",
-    phone: user.phone || "",
-    address: user.address || "",
-  });
-
-  const handleChange = (e) => {
-    setForm((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const saveProfile = async () => {
-    try {
-      setSaving(true);
-      setError("");
-
-      const result = await updateProfile({
-        name: form.name,
-        phone: form.phone,
-        address: form.address,
-      });
-
-      if (!result.success) {
-        setError(result.message);
-        return;
-      }
-
-      alert("Profile Updated Successfully");
-
-      setEditing(false);
-    } catch (err) {
-      setError("Failed to update profile.");
-    } finally {
-      setSaving(false);
-    }
-  };
+  const { user, logout } = useAuth();
 
   return (
     <>
       <Navbar />
 
-      <div className="profile">
+      <main className="profile-page">
 
-        <div className="profile-card">
+        <div className="profile-container">
 
-          <h1>My Profile</h1>
+          {/* Profile Header */}
+          <div className="profile-header">
 
-          {error && (
-            <p className="error-message">
-              {error}
-            </p>
-          )}
+            <div className="profile-avatar">
+              <FaUser />
+            </div>
 
-          <label>Name</label>
+            <div className="profile-heading">
+              <span>MY ACCOUNT</span>
 
-          <input
-            type="text"
-            name="name"
-            value={form.name}
-            disabled={!editing}
-            onChange={handleChange}
-          />
+              <h1>My Profile</h1>
 
-          <label>Email</label>
+              <p>
+                Manage your personal information and account details.
+              </p>
+            </div>
 
-          <input
-            type="email"
-            name="email"
-            value={form.email}
-            disabled
-          />
+          </div>
 
-          <label>Phone</label>
 
-          <input
-            type="tel"
-            name="phone"
-            value={form.phone}
-            disabled={!editing}
-            onChange={handleChange}
-          />
+          {/* Profile Content */}
+          <div className="profile-content">
 
-          <label>Address</label>
+            {/* Personal Information */}
+            <section className="profile-section">
 
-          <textarea
-            name="address"
-            value={form.address}
-            disabled={!editing}
-            onChange={handleChange}
-          />
+              <div className="section-title">
+                <div className="title-icon">
+                  <FaUser />
+                </div>
 
-          <div className="buttons">
+                <div>
+                  <h2>Personal Information</h2>
+                  <p>Your basic account information</p>
+                </div>
+              </div>
 
-            {editing ? (
-              <button
-                onClick={saveProfile}
-                disabled={saving}
-              >
-                {saving
-                  ? "Saving..."
-                  : "Save Changes"}
-              </button>
-            ) : (
-              <button
-                onClick={() =>
-                  setEditing(true)
-                }
-              >
-                Edit Profile
-              </button>
-            )}
 
-            <button
-              className="logout"
-              onClick={() => {
-                logout();
-                navigate("/login");
-              }}
-            >
-              Logout
-            </button>
+              <div className="profile-fields">
+
+                {/* Name */}
+                <div className="profile-field">
+                  <label>Name</label>
+
+                  <div className="field-box">
+                    <FaUser />
+
+                    <span>
+                      {user?.name || "Not provided"}
+                    </span>
+                  </div>
+                </div>
+
+
+                {/* Email */}
+                <div className="profile-field">
+                  <label>Email Address</label>
+
+                  <div className="field-box">
+                    <FaEnvelope />
+
+                    <span>
+                      {user?.email || "Not provided"}
+                    </span>
+                  </div>
+                </div>
+
+
+                {/* Phone */}
+                <div className="profile-field">
+                  <label>Phone Number</label>
+
+                  <div className="field-box">
+                    <FaPhone />
+
+                    <span>
+                      {user?.phone || "Not provided"}
+                    </span>
+                  </div>
+                </div>
+
+
+                {/* Address */}
+                <div className="profile-field full-width">
+                  <label>Address</label>
+
+                  <div className="field-box address-box">
+                    <FaMapMarkerAlt />
+
+                    <span>
+                      {user?.address || "No address added yet"}
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+
+            </section>
+
+
+            {/* Account Actions */}
+            <section className="account-actions">
+
+              <div>
+                <h3>Account Settings</h3>
+
+                <p>
+                  Update your information or sign out of your account.
+                </p>
+              </div>
+
+              <div className="action-buttons">
+
+                <button
+                  className="edit-profile-btn"
+                  onClick={() => {
+                    // Keep your existing edit profile logic here
+                  }}
+                >
+                  Edit Profile
+                </button>
+
+                <button
+                  className="logout-profile-btn"
+                  onClick={logout}
+                >
+                  Logout
+                </button>
+
+              </div>
+
+            </section>
 
           </div>
 
         </div>
 
-      </div>
+      </main>
 
       <Footer />
     </>
