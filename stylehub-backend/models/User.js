@@ -32,11 +32,13 @@ const userSchema = new mongoose.Schema(
     phone: {
       type: String,
       default: "",
+      trim: true,
     },
 
     address: {
       type: String,
       default: "",
+      trim: true,
     },
 
     role: {
@@ -50,46 +52,80 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+
 /* ==========================
-   Hash Password Before Save
+   Hash Password
 ========================== */
 
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    return next();
+userSchema.pre(
+  "save",
+  async function (next) {
+    // Don't hash an unchanged password
+    if (!this.isModified("password")) {
+      return next();
+    }
+
+    try {
+      const salt =
+        await bcrypt.genSalt(10);
+
+      this.password =
+        await bcrypt.hash(
+          this.password,
+          salt
+        );
+
+      next();
+    } catch (error) {
+      next(error);
+    }
   }
+);
 
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-
-  next();
-});
 
 /* ==========================
    Compare Password
 ========================== */
 
-userSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
-};
+userSchema.methods.matchPassword =
+  async function (enteredPassword) {
+    if (!this.password) {
+      return false;
+    }
+
+    return bcrypt.compare(
+      enteredPassword,
+      this.password
+    );
+  };
+
 
 /* ==========================
-   Generate JWT Token
+   Generate JWT
 ========================== */
 
-userSchema.methods.generateToken = function () {
-  return jwt.sign(
-    {
-      id: this._id,
-      role: this.role,
-    },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: "7d",
+userSchema.methods.generateToken =
+  function () {
+    if (!process.env.JWT_SECRET) {
+      throw new Error(
+        "JWT_SECRET is not configured"
+      );
     }
-  );
-};
 
-const User = mongoose.model("User", userSchema);
+    return jwt.sign(
+      {
+        id: this._id,
+        role: this.role,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "7d",
+      }
+    );
+  };
+
+
+const User =
+  mongoose.model("User", userSchema);
 
 export default User;
